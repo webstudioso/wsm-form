@@ -132,7 +132,7 @@ const script = function (props) {
             const targetAttributes = this.getAttributes();
             const scope = this;
             console.log(`Invoking target function with attributes ${targetAttributes}, is function? ${targetFunction instanceof Function}`);
-            targetFunction(...targetAttributes)
+            targetFunction.apply(null, targetAttributes)
                 .then((response) => {
                     console.log(`Response received ${response}`);
                     scope.sendNotification(

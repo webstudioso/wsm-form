@@ -382,7 +382,7 @@ describe("Form script", () => {
     describe("getAccount", () => {
 
         it("Returns is no provider is found", () => {
-            window.walletProvider = null
+            window.walletProvider = null;
             const fn = new script();
             const account = fn.getAccount();
             expect(account).toBe(undefined);
