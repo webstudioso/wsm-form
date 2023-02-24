@@ -24,11 +24,15 @@ const script = function (props) {
 
     this.formatToWei = (value) => {
         const valueInput = typeof value === 'string' ? value : String(value);
-        return ethers.utils.parseUnits(valueInput, "ether");
+        const parsedValue = ethers.utils.parseUnits(valueInput, "ether");
+        console.log(`formatToWei input ${value} to ${parsedValue}`);
+        return parsedValue;
     }
 
     this.formatToBytes32 = (value) => {
-        return ethers.utils.formatBytes32String(value);
+        const parsedValue = ethers.utils.formatBytes32String(value);
+        console.log(`formatToBytes32 input ${value} to ${parsedValue}`);
+        return parsedValue;
     }
 
     this.getAccount = () => {
@@ -72,6 +76,7 @@ const script = function (props) {
                 // Do nothing
                 
         }
+        console.log(`getValue for input ${required} is ${value}`);
         return value;
     }
 
@@ -82,6 +87,7 @@ const script = function (props) {
     this.getMethod = () => {
         const abi = this.getAbi();
         const method = abi.find((item) => item.name === props.method);
+        console.log(`getMethod ${method}`);
         return method;
     }
 
@@ -102,6 +108,7 @@ const script = function (props) {
         const method = this.getMethod();
         const contract = new ethers.Contract(props.contract, abi, signer);
         const targetFunction = contract[method.name];
+        console.log(`getFunction ${targetFunction}`);
         return targetFunction;
     }
 
@@ -124,8 +131,10 @@ const script = function (props) {
             const targetFunction = this.getFunction();
             const targetAttributes = this.getAttributes();
             const scope = this;
+            console.log(`Invoking target function with attributes ${targetAttributes}`);
             targetFunction(...targetAttributes)
                 .then((response) => {
+                    console.log(`Response received ${response}`);
                     scope.sendNotification(
                         'success', 
                         'Your transaction was successful, view it on the explorer',
@@ -133,6 +142,7 @@ const script = function (props) {
                         5000
                     )
                 }, (error) => {
+                    console.log(`Error received ${error}`);
                     scope.sendNotification(
                         'error', 
                         error?.message,
@@ -141,6 +151,7 @@ const script = function (props) {
                     )
                 });
         } catch (e) {
+            console.log(`Method call failed received ${e}`);
             this.sendNotification(
                 'error', 
                 e,
