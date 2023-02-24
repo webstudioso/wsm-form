@@ -131,7 +131,7 @@ const script = function (props) {
             const targetFunction = this.getFunction();
             const targetAttributes = this.getAttributes();
             const scope = this;
-            console.log(`Invoking target function with attributes ${targetAttributes}`);
+            console.log(`Invoking target function with attributes ${targetAttributes}, is function? ${targetFunction instanceof Function}`);
             targetFunction(...targetAttributes)
                 .then((response) => {
                     console.log(`Response received ${response}`);
