@@ -1,6 +1,6 @@
 {
   "name": "wsm-form",
-  "version": "1.0.0",
+  "version": "0.0.14",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/module.js",
@@ -8,11 +8,6 @@
   "type": "module",
   "alias": {
     "/": "./src/lib"
-  },
-  "targets": {
-    "main": {
-      "optimize": true
-    }
   },
   "scripts": {
     "test": "jest --collectCoverage=true",

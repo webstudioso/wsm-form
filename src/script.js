@@ -31,9 +31,34 @@ const script = function (props) {
         return ethers.utils.formatBytes32String(value);
     }
 
+    this.getAccount = () => {
+        const provider = window.walletProvider;
+        if (!provider) return;
+  
+        if (provider.accounts && provider.accounts.length > 0)
+          return provider.accounts[0];
+  
+        return provider.selectedAddress;
+    };
+
+    this.getDefaultValue = (component, required) => {
+        const attr = component.elements[required];
+        // Default value?
+        let defaultValue;
+        const defaultContent = attr?.attributes?.defaultValue?.value;
+        switch (defaultContent) {
+            case 'userAddress':
+                defaultValue = this.getAccount();
+            break;
+            default:
+        }
+        console.log(`Default value for ${required} is ${defaultValue}`);
+        return defaultValue;
+    }
+
     this.getValue = (component, required) => {
         const attr = component.elements[required];
-        let value = attr.value;
+        let value = attr.value || this.getDefaultValue(component, required);
         const format = attr?.attributes?.format?.value;
         // Does it require parsing?
         switch(format) {

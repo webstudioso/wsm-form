@@ -1,6 +1,6 @@
-import loadTraits from './traits';
-import loadBlocks from './blocks';
-import loadComponents from './components';
+import { loadTraits } from './traits';
+import { loadBlocks } from './blocks';
+import { loadComponents } from './components';
 
 const Plugin = (editor, opts = {}) => {
 

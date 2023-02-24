@@ -9,7 +9,8 @@ import {
   typeLabel,
 } from './components';
 
-const blocks = (editor, opt) => {
+export const loadBlocks = (editor, opt) => {
+
   const opts = opt;
   const bm = editor.BlockManager;
   const addBlock = (id, def) => {
@@ -107,7 +108,7 @@ const blocks = (editor, opt) => {
   </g>
 </svg>
     `,
-    content: { type: typeButton },
+    content: { type: typeButton, content: `<button>Button</button>` },
   });
 
   addBlock(typeLabel, {
@@ -143,5 +144,3 @@ const blocks = (editor, opt) => {
   //   content: { type: typeRadio },
   // });
 }
-
-export default blocks;

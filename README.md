@@ -7,7 +7,7 @@ This module adds capabilities to web apps built with `Webstudio` to invoke smart
 ### Testing and Building Module
 ```
 npm i
-npm run tests
+npm run test
 npm run build
 ```
 

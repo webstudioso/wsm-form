@@ -378,4 +378,62 @@ describe("Form script", () => {
             expect(fn.getAttributes().length).toBe(0);
         });
     });
+
+    describe("getAccount", () => {
+
+        it("Returns is no provider is found", () => {
+            window.walletProvider = null
+            const fn = new script();
+            const account = fn.getAccount();
+            expect(account).toBe(undefined);
+        });
+
+        it("Returns first address if in account list", () => {
+            window.walletProvider = {
+                accounts: [
+                    '0x1'
+                ],
+                selectedAddress: '0x1'
+            }
+            const fn = new script();
+            const account = fn.getAccount();
+            expect(account).toBe(window.walletProvider.accounts[0]);
+        });
+
+        it("Returns selected address if account list empty", () => {
+            window.walletProvider = {
+                accounts: [
+                ],
+                selectedAddress: '0x1'
+            }
+            const fn = new script();
+            const account = fn.getAccount();
+            expect(account).toBe(window.walletProvider.selectedAddress);
+        });
+    });
+
+    describe("getDefaultValue", () => {
+        it("Returns default value as user wallet address if specified", () => {
+            window.walletProvider = {
+                accounts: [
+                ],
+                selectedAddress: '0x1'
+            }
+            const component = {
+                elements: {
+                    _to: {
+                        attributes: {
+                            defaultValue: {
+                                value: 'userAddress'
+                            }
+                        }
+                    }
+                }
+            };
+            const required = '_to';
+            const fn = new script();
+            const defaultValue = fn.getDefaultValue(component, required);
+            expect(defaultValue).toBe('0x1');
+        });
+    });
 });
