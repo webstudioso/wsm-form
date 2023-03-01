@@ -243,7 +243,7 @@ export const input = {
 
 export const button = {
   extend: typeInput,
-  isComponent: el => el.tagName === 'BUTTON' && el.id !== 'wallet-connect-button',
+  isComponent: el => el.tagName === 'BUTTON' && el.id !== 'wsm-wallet-connect',
 
   model: {
     defaults: {
