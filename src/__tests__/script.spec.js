@@ -336,7 +336,6 @@ describe("Form script", () => {
             }
             const fn = new script(props);
             const attrs = fn.getAttributes();
-            console.log(attrs);
             expect(global.ethers.Contract).toHaveBeenCalled();
         });
     });

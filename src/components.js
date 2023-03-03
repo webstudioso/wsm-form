@@ -197,48 +197,51 @@ export const form = {
 };
 
 export const input = {
-  isComponent: el => el.tagName === 'INPUT',
+    isComponent: el => el.tagName === 'INPUT',
 
-  model: {
-    defaults: {
-      tagName: 'input',
-      droppable: false,
-      highlightable: false,
-      attributes: { type: 'text', defaultValue: 'none' },
-      format: { value: 'none'},
-      traits: [
-        nameTrait,
-        placeholderTrait,
-        formatterTrait,
-        {
-          type: 'select',
-          name: 'type',
-          options: [
-            { value: 'text' },
-            { value: 'email' },
-            { value: 'password' },
-            { value: 'number' },
-          ]
-        },
-        {
-          type: 'select',
-          name: 'defaultValue',
-          options: [
-            { value: 'none' },
-            { value: 'userAddress' }
-          ]
-        },
-        requiredTrait
-      ],
+    model: {
+      defaults: {
+        tagName: 'input',
+        droppable: false,
+        highlightable: false,
+        attributes: { type: 'text', defaultValue: 'none' },
+        format: { value: 'none'},
+        traits: [
+          nameTrait,
+          placeholderTrait,
+          formatterTrait,
+          {
+            type: 'select',
+            name: 'type',
+            options: [
+              { value: 'text' },
+              { value: 'email' },
+              { value: 'password' },
+              { value: 'number' },
+            ]
+          },
+          {
+            type: 'select',
+            name: 'defaultValue',
+            options: [
+              { value: 'none' },
+              { value: 'userAddress' }
+            ]
+          },
+          valueTrait,
+          requiredTrait
+        ],
+      },
     },
-  },
-
-  extendFnView: ['updateAttributes']
-  // view: {
-  //   updateAttributes() {
-  //     this.el.setAttribute('autocomplete', 'off');
-  //   },
-  // }
+    extendFnView: ['updateAttributes'],
+    view: {
+        init() {
+            this.listenTo(this.model, 'change:attributes:value', this.handleValue);
+        },
+        handleValue() {
+            this.el.value = this.model.get('attributes')?.value;
+        }
+    }
 };
 
 export const button = {
@@ -264,42 +267,6 @@ export const button = {
           ]
       }]
     },
-    // getComponents: () => {
-    //     return this?.components || {};
-    // },
-    // setComponents: (value) => {
-    //   return this?.components(value)
-    // },
-    // getAttributeValue: (attr) => {
-    //     return this?.get(attr) || '';
-    // },
-    // setAttributeValue: (attr, value) => {
-    //     return this?.set(attr, value) || '';
-    // },
-    // setAttributeListener: (eventType, handler) => {
-    //     return this?.on(eventType, handler) || '';
-    // },
-    // init() {
-    //     const comps = this.getComponents();
-    //     console.log(comps);
-    //     console.log(this.components());
-    //     const tChild =  comps.length === 1 && comps.models[0];
-    //     console.log(tChild);
-    //     const chCnt = (tChild && tChild.is('textnode') && tChild.get('content')) || '';
-    //     console.log(chCnt);
-    //     const text = chCnt || this.getAttributeValue('text');
-    //     console.log(text);
-    //     console.log(this.get('text'));
-    //     this.setAttributeValue('text', chCnt || text || 'Button');
-    //     this.setAttributeListener('change:text', this.__onTextChange);
-    //     (text !== chCnt) && this.__onTextChange();
-    // },
-    // __onTextChange() {
-    //   const value = this.getAttributeValue('text');
-    //   this.setComponents(value);
-    // },
-
-
     init() {
       const comps = this.components();
       const tChild =  comps.length === 1 && comps.models[0];
@@ -309,11 +276,9 @@ export const button = {
       this.on('change:text', this.__onTextChange);
       (text !== chCnt) && this.__onTextChange();
     },
-
     __onTextChange() {
       this.components(this.get('text'));
     },
-
   },
 
   // view: {

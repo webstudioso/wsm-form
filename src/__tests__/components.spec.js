@@ -70,6 +70,18 @@ describe("Form components", () => {
             expect(input.model).toBeTruthy()
         })
 
+        it("Has Input property value defined with custom accessors", async () => {
+            input.view.model = {
+                get: jest.fn().mockReturnValue({value:'test123'})
+            }
+            input.view.el = { value: '' }
+            input.view.listenTo = jest.fn()
+            input.view.init()
+            expect(input.view.listenTo).toHaveBeenCalled()
+            input.view.handleValue()
+            expect(input.view.model.get).toHaveBeenCalled()
+        })
+
         it("Has Label properties defined", async () => {
             expect(label).toBeTruthy()
             expect(label.isComponent({ tagName: 'LABEL' })).toBeTruthy()
