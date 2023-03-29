@@ -121,8 +121,31 @@ const script = function (props) {
         const requiredAttributes = this.parseMethodInputs(method);
         const args = [];
         const component = this.getComponent();
+        // Function args
         requiredAttributes.forEach((required) => args.push(this.getValue(component, required)));
+        const txOptions = this.getOptions(component)
+        // TX args
+        if (txOptions) {
+            args.push(txOptions)
+        }
+        console.log(`Attributes to pass ${JSON.stringify(args)}`)
         return args;
+    }
+
+    this.isOptional = (attr) => {
+        return attr?.attributes?.txOption?.value;
+    }
+
+    this.getOptions = (component) => {
+        const attrs = Object.keys(component.elements)
+        const args = {}
+        attrs.forEach((attr) => {
+            const field = component.elements[attr]
+            if (this.isOptional(field)) {
+                args[attr] = this.getValue(component, attr)
+            }
+        })
+        return args
     }
 
     this.handleSubmit = (e) => {

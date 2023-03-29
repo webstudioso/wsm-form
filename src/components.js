@@ -35,6 +35,11 @@ const requiredTrait = {
   name: 'required',
 };
 
+const optionTrait = {
+  type: 'checkbox',
+  name: 'txOption',
+};
+
 const checkedTrait = {
   type: 'checkbox',
   name: 'checked',
@@ -206,6 +211,7 @@ export const input = {
         highlightable: false,
         attributes: { type: 'text', defaultValue: 'none' },
         format: { value: 'none'},
+        txOption: false,
         traits: [
           nameTrait,
           placeholderTrait,
@@ -229,7 +235,8 @@ export const input = {
             ]
           },
           valueTrait,
-          requiredTrait
+          requiredTrait,
+          optionTrait
         ],
       },
     },

@@ -327,6 +327,7 @@ describe("Form script", () => {
             urlInput.setAttribute("name", "_ipfsHash");
             urlInput.value = "https://demo.com";
             mockElement.appendChild(urlInput);
+
         });
 
         it("Returns list of attribute values from form", async () => {
@@ -347,6 +348,7 @@ describe("Form script", () => {
                 method: 'mint'
             }
             const fn = new script(props);
+            fn.getOptions = jest.fn().mockReturnValue(null)
             const abiContent = fn.getAbi();
             const method = abiContent[0];
             const attrs = fn.getAttributes(method);
@@ -372,10 +374,34 @@ describe("Form script", () => {
                 }
             ];
             const fn = new script({ abi });
+            fn.getOptions = jest.fn().mockReturnValue(null)
             expect(fn.getAttributes(abiContentEmpty[0]).length).toBe(0);
             expect(fn.getAttributes(abiContentNull[0]).length).toBe(0);
             expect(fn.getAttributes().length).toBe(0);
         });
+
+        it("Returns list of attribute names plus txOpsions required by method name", () => {
+            let valueInput = document.createElement('input');
+            valueInput.setAttribute("type", "text");
+            valueInput.setAttribute("name", "value");
+            valueInput.setAttribute("format", "toWei");
+            valueInput.setAttribute("txOption", true);
+            valueInput.value = "123";
+            mockElement.appendChild(valueInput);
+            const props = {
+                abi,
+                method: 'mint'
+            }
+            const fn = new script(props);
+            fn.getOptions = jest.fn().mockReturnValue({ value: 1 })
+            const abiContent = fn.getAbi();
+            const method = abiContent[0];
+            const attrs = fn.getAttributes(method);
+            expect(attrs.length).toEqual(3);
+            expect(attrs[2]).toEqual({value:1})
+        });
+
+
     });
 
     describe("getAccount", () => {
@@ -435,4 +461,94 @@ describe("Form script", () => {
             expect(defaultValue).toBe('0x1');
         });
     });
+
+    describe("isOptional", () => {
+        it("Returns true if optional checked", () => {
+            const component = {
+                elements: {
+                    value: {
+                        attributes: {
+                            txOption: {
+                                value: true
+                            }
+                        }
+                    }
+                }
+            }
+            const fn = new script()
+            const field = component.elements['value']
+            const isOptional = fn.isOptional(field)
+            expect(isOptional).toBeTruthy()
+        })
+
+        it("Returns false if optional not checked", () => {
+            const component = {
+                elements: {
+                    value: {
+                        attributes: {
+                            txOption: {
+                                value: false
+                            }
+                        }
+                    }
+                }
+            }
+            const fn = new script()
+            const field = component.elements['value']
+            const isOptional = fn.isOptional(field)
+            expect(isOptional).not.toBeTruthy()
+        })
+    })
+
+    describe("getOptions", () => {
+        it("Returns optional values if checked as optional", () => {
+            // Mock child inputs
+            const valueInput = document.createElement('input');
+            valueInput.setAttribute("type", "text");
+            valueInput.setAttribute("name", "value");
+            valueInput.setAttribute("option", true);
+            valueInput.value = 1.25;
+            mockElement.appendChild(valueInput);
+            const component = {
+                elements: {
+                    value: {
+                        value: 1,
+                        attributes: {
+                            txOption: {
+                                value: true
+                            }
+                        }
+                    }
+                }
+            };
+            const fn = new script();
+            const options = fn.getOptions(component);
+            expect(options).toEqual({ value: 1 });
+        })
+
+        it("Returns null values if not checked as optional", () => {
+            // Mock child inputs
+            const valueInput = document.createElement('input');
+            valueInput.setAttribute("type", "text");
+            valueInput.setAttribute("name", "value");
+            valueInput.setAttribute("option", true);
+            valueInput.value = 1.25;
+            mockElement.appendChild(valueInput);
+            const component = {
+                elements: {
+                    value: {
+                        value: 1,
+                        attributes: {
+                            txOption: {
+                                value: false
+                            }
+                        }
+                    }
+                }
+            };
+            const fn = new script();
+            const options = fn.getOptions(component);
+            expect(options).toEqual({});
+        })
+    })
 });
