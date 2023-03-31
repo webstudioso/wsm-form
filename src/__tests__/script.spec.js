@@ -508,10 +508,12 @@ describe("Form script", () => {
             valueInput.setAttribute("name", "value");
             valueInput.setAttribute("option", true);
             valueInput.value = 1.25;
+            valueInput.name = "value";
             mockElement.appendChild(valueInput);
             const component = {
                 elements: {
                     value: {
+                        name: "value",
                         value: 1,
                         attributes: {
                             txOption: {

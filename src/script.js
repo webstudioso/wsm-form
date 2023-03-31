@@ -133,16 +133,24 @@ const script = function (props) {
     }
 
     this.isOptional = (attr) => {
-        return attr?.attributes?.txOption?.value;
+        console.log(attr)
+        const isOptional = attr?.attributes?.txOption?.value
+        console.log(`Is optional? ${isOptional}`)
+        return isOptional
     }
 
     this.getOptions = (component) => {
+        console.log('Get options for component')
+        console.log(component)
         const attrs = Object.keys(component.elements)
         const args = {}
         attrs.forEach((attr) => {
+            console.log(`Eval form field key ${attr}`)
             const field = component.elements[attr]
+            console.log(`Field retrieved`)
+            console.log(field)
             if (this.isOptional(field)) {
-                args[attr] = this.getValue(component, attr)
+                args[field.name] = this.getValue(component, attr)
             }
         })
         return args
