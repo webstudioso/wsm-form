@@ -486,9 +486,6 @@ describe("Form script", () => {
                 elements: {
                     value: {
                         attributes: {
-                            txOption: {
-                                value: false
-                            }
                         }
                     }
                 }
@@ -533,12 +530,14 @@ describe("Form script", () => {
             const valueInput = document.createElement('input');
             valueInput.setAttribute("type", "text");
             valueInput.setAttribute("name", "value");
-            valueInput.setAttribute("option", true);
+            valueInput.setAttribute("txOption", true);
             valueInput.value = 1.25;
+            valueInput.name = "test"
             mockElement.appendChild(valueInput);
             const component = {
                 elements: {
                     value: {
+                        name: "test",
                         value: 1,
                         attributes: {
                             txOption: {
@@ -550,7 +549,7 @@ describe("Form script", () => {
             };
             const fn = new script();
             const options = fn.getOptions(component);
-            expect(options).toEqual({});
+            expect(options).toEqual({ test: 1 });
         })
     })
 });
