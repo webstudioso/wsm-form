@@ -1,6 +1,6 @@
  # Webstudio Form Module
 
-This module adds capabilities to web apps built with `Webstudio` to invoke smart contract methods on any EVM compatible blockchain network.
+This module adds capabilities to web apps built with [Webstudio](https://webstudio.so) to invoke smart contract methods on any EVM compatible blockchain network.
 
  ![Webstudio Module Form](https://github.com/webstudioso/wsm-form/actions/workflows/production.yml/badge.svg)
 
