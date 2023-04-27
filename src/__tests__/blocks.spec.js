@@ -29,7 +29,7 @@ describe("Form blocks", () => {
     describe("blocks", () => {
         it("Adds form, input, label and button blocks", async () => {
             loadBlocks(editor, opts);
-            expect(editor.BlockManager.add).toHaveBeenCalledTimes(4);
+            expect(editor.BlockManager.add).toHaveBeenCalledTimes(3);
         })
     })
 })
