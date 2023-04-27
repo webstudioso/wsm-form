@@ -34,7 +34,7 @@ export const loadBlocks = (editor, opt) => {
           Second Attribute
         </label>
         <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-password" type="text" placeholder="Function second input">
-        <button class="my-2 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+        <button class="my-2 shadow bg-black hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
           Call Smart Contract Function
         </button>
       </form>
@@ -52,7 +52,7 @@ export const loadBlocks = (editor, opt) => {
             { 
               type: typeInput, 
               value:'1', 
-              attributes: { type: 'text', name: '_to', required: true, placeholder: 'Function first input' },
+              attributes: { type: 'text', name: '_to', required: false, placeholder: 'Function first input' },
               classes: ['bg-gray-200', 'appearance-none', 'border-2', 'border-gray-200', 'rounded', 'w-full', 'py-2', 'px-4', 'text-gray-700', 'leading-tight', 'focus:outline-none', 'focus:bg-white', 'focus:border-purple-500']
         }]
         }, {
@@ -65,14 +65,14 @@ export const loadBlocks = (editor, opt) => {
             { 
               type: typeInput, 
               value:'2', 
-              attributes: { type: 'text', name: '_ipfsHash', required: true, placeholder: 'Function second input' },
+              attributes: { type: 'text', name: '_ipfsHash', required: false, placeholder: 'Function second input' },
               classes: ['bg-gray-200', 'appearance-none', 'border-2', 'border-gray-200', 'rounded', 'w-full', 'py-2', 'px-4', 'text-gray-700', 'leading-tight', 'focus:outline-none', 'focus:bg-white', 'focus:border-purple-500']
             }]
         }, {
           components: [{ 
             type: typeButton, 
             attributes: { type: 'submit' },
-            classes: ['shadow','my-2','bg-purple-500','hover:bg-purple-400','focus:shadow-outline','focus:outline-none','text-white','font-bold','py-2','px-4','rounded']
+            classes: ['shadow','my-2','bg-black','hover:bg-grey-200','focus:shadow-outline','focus:outline-none','text-white','font-bold','py-2','px-4','rounded']
           }]
         },
       ]
