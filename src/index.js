@@ -6,7 +6,7 @@ const Plugin = (editor, opts = {}) => {
 
   const config = {
     blocks: ['form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
-    category: { id: 'forms', label: 'Forms' },
+    category: "Web3",
     block: () => ({}),
     ...opts
   };
